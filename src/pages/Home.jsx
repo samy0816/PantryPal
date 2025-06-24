@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export default function Home() {
   useEffect(() => {
-    document.body.style.backgroundImage = "url('/organic-food-background-hand-drawn-concept-free-vector.jpg')";
+    document.body.style.backgroundImage = "url('Images/organic-food-background-hand-drawn-concept-free-vector.jpg')";
     document.body.style.backgroundSize = "cover";
     document.body.style.backgroundRepeat = "no-repeat";
     document.body.style.backgroundPosition = "center";

@@ -4,9 +4,10 @@ import './index.css';
 import App from './App.jsx';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'; // FIXED
 import Navigation from './pages/navigation.jsx';
-import Chefstart from './pages/chefstart.jsx';
+import Chefstart from './pages/Chefstart.jsx';
 import Bmeter from './pages/bmeter2.jsx';
-import Foodology from './pages/foodology.jsx';
+import Cookbuddy from './pages/Cookbuddy.jsx';
+import Bmeter2 from './pages/bmeter3.jsx';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
 
    {
     path: '/foodology',
-    element: <Foodology />,
+    element: <Cookbuddy />,
   },
 
    {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
     path: '/bmeter',
     element: <Bmeter />,
   },
+  {
+    path:'/bmeter2',
+    element:<Bmeter2/>
+  }
   // Future route example:
   // {
   //   path: '/profile/:id',

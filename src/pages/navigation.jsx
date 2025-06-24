@@ -1,14 +1,12 @@
 import { Link } from "react-router-dom"
-import Chefstart from "./chefstart"
-import Bmeter from "./bmeter"
-import Foodology from "./foodology"
+import Chefstart from "./Chefstart"
 
-import Card from "../components/card";
+import Card from "../components/Card";
 import { useEffect } from "react";
 export default function Navigation(){
 
      useEffect(() => {
-        document.body.style.backgroundImage = "linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url('/organic-food-background-hand-drawn-concept-free-vector.jpg')";
+        document.body.style.backgroundImage = "linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),url('Images/organic-food-background-hand-drawn-concept-free-vector.jpg')";
         document.body.style.backgroundSize = "cover";
         document.body.style.backgroundRepeat = "no-repeat";
         document.body.style.backgroundPosition = "center";
@@ -20,23 +18,23 @@ export default function Navigation(){
       }, []);
     const style={
         display: "flex",
-        gap:"10px",
+        gap:"30px",
         fontFamily: "Life Savers",
         fontSize: "40px",
-        fontWeight: "700",
+        fontWeight: "bold",
 
     }
     return(
         <div style={style}>
            
-            <Link  to='/chefstart' > <Card name="Chefstart" backgroundImage="/uzIlV32.gif" /></Link>
+            <Link  to='/chefstart' > <Card name="Chefstart" backgroundImage="Images/uzIlV32.gif" /></Link>
             <br />
-            <Link  to='/bmeter'><Card name="BudgetMeter" backgroundImage="/image2.gif"/></Link>
+            <Link  to='/bmeter'><Card name="BudgetMeter" backgroundImage="Images/image2.gif"/></Link>
             <br />
-            <Link  to='/foodology'><Card name="Foodology" backgroundImage="/image4.gif"/></Link>
+            <Link  to='/foodology'><Card name="CookBuddy" backgroundImage="Images/image4.gif"/></Link>
 
              <br />
-            <Link  to='/foodology'><Card name="Quiz" backgroundImage="/image3.gif"/></Link>
+
         </div>
     )
 }
