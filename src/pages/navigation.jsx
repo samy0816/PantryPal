@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom"
 import Chefstart from "./chefstart"
 
-import Card from "../components/Card";
+import Card from "../components/card";
 import { useEffect } from "react";
 export default function Navigation(){
 
