@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import Chefstart from "./Chefstart"
+import Chefstart from "./chefstart"
 
 import Card from "../components/Card";
 import { useEffect } from "react";
