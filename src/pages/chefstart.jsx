@@ -11,6 +11,10 @@ import 'swiper/css/scrollbar';
 import '../styles/style.css';
 import RadioGroupRating from '../components/RadioGroupRating';
 import ToDoNotes from '../components/ToDoNotes';
+import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import PostTaskConvo from "../components/PostTaskConvo"; // import it
 
 
 const slidesData = [
@@ -35,8 +39,9 @@ const slidesData = [
             },
         ],
         "realTask": {
-            "description": "Grab a tomato or onion and practice slicing it using the correct grip and pressure. Focus on making smooth, even cuts without rushing.",
-            "duration": 180,
+              "description": "Grab an onion or tomato. First, practice the correct grip: pinch the blade and wrap your fingers around the handle. Slice slowly, aiming for consistent thickness. Observe your cuts — are they clean and controlled? Do 10 slices, then assess.",
+  "duration": 180,
+
         },
     },
     {
@@ -60,8 +65,8 @@ const slidesData = [
             },
         ],
         "realTask": {
-            "description": "Rinse a small portion of rice thoroughly, then cook it using the 2:1 water ratio. Let it simmer with the lid on and resist peeking. Taste at the end and assess texture.",
-            "duration": 300,
+            "description": "Measure ½ cup rice. Rinse thoroughly under cold water until water runs clear. Add 1 cup water, a pinch of salt, and bring to a boil. Cover and simmer on low for 10 minutes. Do *not* lift the lid. At the end, taste: is it fluffy, not sticky? Adjust next time based on texture",
+            "duration": 10,
         },
     },
     {
@@ -79,7 +84,7 @@ const slidesData = [
             },
         ],
         "realTask": {
-            "description": "Pick 2–3 spices you commonly use. Smell them, taste a pinch, and note their aroma. Imagine how they’d pair in both sweet and savory dishes.",
+            "description": "Pick 3 spices from your kitchen — one sweet (like cinnamon), one savory (like cumin), and one bold (like chili). Smell and taste a pinch of each. Now, heat a pan with oil and bloom them briefly. What aromas come out? Imagine them in sweet or savory dishes. Jot down ideas.",
             "duration": 60,
         },
     },
@@ -110,7 +115,7 @@ const slidesData = [
             },
         ],
         "realTask": {
-            "description": "Try making a basic roux with butter and flour. Slowly whisk in warm milk or water to build a sauce. Adjust seasoning and texture, and notice how it transforms.",
+            "description": "Melt 1 tbsp butter in a pan. Whisk in 1 tbsp flour until a smooth paste forms (a roux). Slowly add ½ cup warm milk, whisking constantly. Let it thicken. Season with salt and taste. Try adjusting the flavor with a bit of lemon juice, sugar, or herbs — how does it change?",
             "duration": 300,
         },
     },
@@ -141,7 +146,7 @@ const slidesData = [
             },
         ],
         "realTask": {
-            "description": "Using any veggies and protein you have, stir-fry in a hot pan. Time the additions properly and thicken with a cornstarch slurry. Taste and adjust.",
+            "description": "Choose any 3 veggies (e.g., bell peppers, carrots, onions) and a protein (tofu or chicken). Heat oil (use peanut oil if possible) in a wok. Add hardest veggies first. Stir constantly. Add soy sauce + a cornstarch-water mix to thicken. Taste, adjust seasoning, and serve hot.",
             "duration": 360,
         },
     },
@@ -172,7 +177,7 @@ const slidesData = [
             },
         ],
         "realTask": {
-            "description": "Take any dish (even leftovers) and plate it intentionally. Use negative space, color contrast, and height to elevate its appearance. Take a picture and assess.",
+            "description": "Take a simple dish (even leftovers). Use a large white plate. Place main element slightly off-center. Add small color contrast (like herbs or sauce drizzle). Leave empty space. Add one element with height. Take a photo — does it look restaurant-style?",
             "duration": 180,
         },
     },
@@ -203,7 +208,7 @@ const slidesData = [
             },
         ],
         "realTask": {
-            "description": "Use the water displacement method to seal a bag. If possible, simulate sous vide by placing the sealed bag in warm water. Practice precise searing afterward.",
+            "description": "Seal any protein (e.g., chicken breast) in a zip bag using water displacement method. Submerge in a pot of 60°C water for 30 min (simulate sous vide). Afterward, dry it and sear both sides on a hot pan. Did the doneness feel even? Try with a different cut next time.",
             "duration": 300,
         },
     },
@@ -234,7 +239,7 @@ const slidesData = [
             },
         ],
         "realTask": {
-            "description": "Make a simple sushi roll using rice and vegetables. Focus on spreading the rice thin, rolling tightly, and achieving symmetry.",
+            "description": "Lay a bamboo mat with plastic wrap. Spread seasoned rice thinly on a nori sheet. Add thin veggie strips (e.g., cucumber, carrot). Roll tightly, using gentle pressure. Slice with a sharp, wet knife in one motion. Arrange slices and take a picture of your work.",
             "duration": 300,
         },
     },
@@ -255,6 +260,7 @@ const Chefstart = () => {
 
  const [cookingMode, setCookingMode] = useState(false);
 
+const [showPostTaskConvo, setShowPostTaskConvo] = useState(false);
 
   const [showConfidenceRating, setShowConfidenceRating] = useState(false);
   const [confidenceValue, setConfidenceValue] = useState(null);
@@ -319,6 +325,8 @@ const Chefstart = () => {
     const { correctIndex, taskIndex } = currentTask;
 
    if (selectedAnswer === correctIndex) {
+     const audio = new Audio("./Images/correct.mp3");
+  audio.play().catch((e) => console.log("Playback error:", e));
     toast.success("Correct! 🎉");
 
     if (!cookingMode) {
@@ -333,27 +341,45 @@ const Chefstart = () => {
     setCurrentTask(null);
     playerRef.current?.getInternalPlayer()?.playVideo?.();
   } else {
+     const audio = new Audio("./Images/fail.mp3");
+  audio.play().catch((e) => console.log("Playback error:", e));
     toast.error("Oops! Try again.");
   }
   
   };
 
-  useEffect(() => {
-    let timer;
-    if (showRealTask && taskTimeLeft > 0) {
-      timer = setInterval(() => {
-        setTaskTimeLeft((prev) => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            setTaskDoneEnabled(true);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-    }
-    return () => clearInterval(timer);
-  }, [showRealTask, taskTimeLeft]);
+useEffect(() => {
+  if (showRealTask && currentSlideIndex !== null) {
+    setTaskTimeLeft(slidesData[currentSlideIndex]?.realTask?.duration || 30);
+  }
+}, [showRealTask, currentSlideIndex]);
+
+useEffect(() => {
+  let timer;
+  if (showRealTask && taskTimeLeft > 0) {
+    timer = setInterval(() => {
+      setTaskTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          setTaskDoneEnabled(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  }
+  return () => clearInterval(timer);
+}, [showRealTask, taskTimeLeft]);
+const resetSlideSession = () => {
+  setModalVideoUrl(null);
+  setCurrentSlideIndex(null);
+  setCurrentTask(null);
+  setShowRealTask(false);
+  setShowConfidenceRating(false);
+  setConfidenceValue(null);
+  setShowRewatchPrompt(false);
+  setShowPostTaskConvo(false);
+};
 
   return (
     <div>
@@ -367,6 +393,7 @@ const Chefstart = () => {
       }}>
         ChefStart
       </h1>
+     
 <div style={{
   position: "absolute",
   top: "20px",
@@ -379,6 +406,13 @@ const Chefstart = () => {
   fontSize: "16px",
   color: "white"
 }}>
+    <Tooltip title="Want to practice real cooking skills? Turn this on to skip quizzes and take on a timed hands-on challenge at the end of each video.">
+      <IconButton  style={{ color: "white",opacity:"1"}} className='tbtn'>
+            <InfoOutlineIcon style={{opacity:"1",color:"white"
+            }}/>
+      </IconButton>
+    </Tooltip>
+
   <label className="switch">
    <input
   type="checkbox"
@@ -387,7 +421,9 @@ const Chefstart = () => {
 />
 
     <span className="slider round"></span>
+ 
   </label>
+
   <span>Cooking Mode</span>
 </div>
 
@@ -448,15 +484,7 @@ const Chefstart = () => {
 
         {/* Modal Video Player */}
         {modalVideoUrl && (
-          <div className="video-modal" onClick={() => {
-            setModalVideoUrl(null);
-            setCurrentSlideIndex(null);
-            setCurrentTask(null);
-            setShowRealTask(false);
-            setShowConfidenceRating(false);
-            setConfidenceValue(null);
-            setShowRewatchPrompt(false);
-          }}>
+   <div className="video-modal" onClick={resetSlideSession}>
             <div className="video-container" onClick={(e) => e.stopPropagation()}>
               <ReactPlayer
                 ref={playerRef}
@@ -467,7 +495,7 @@ const Chefstart = () => {
                 height="100%"
                 onProgress={handleProgress}
               />
-              <button className="close-btn" onClick={() => setModalVideoUrl(null)}>✕</button>
+      <button className="close-btn" onClick={resetSlideSession}>✕</button>
 
               {/* In-Video Task */}
               {currentTask && (
@@ -509,14 +537,17 @@ const Chefstart = () => {
       {slidesData[currentSlideIndex]?.realTask?.description}
     </p>
     <div className="real-task-timer">⏱ Time Left: {taskTimeLeft}s</div>
-    <button
+    <button style={{opacity:"1"}}
       disabled={!taskDoneEnabled}
       onClick={() => {
+      const audio = new Audio("./Images/success.mp3");
+  audio.play().catch((e) => console.log("Playback error:", e));
+
         toast.success("Great! Task completed ✅ You are doing great chef!");
         setShowRealTask(false);
         setShowConfidenceRating(true);
       }}
-      className="real-task-button"
+      className="real-task-button tbtn"
     >
       Done
     </button>
@@ -566,11 +597,14 @@ const Chefstart = () => {
                     </div>
                   )}
 
-                  {confidenceValue >= 4 && (
-                    <div style={{ marginTop: "10px", color: "#00ff88" }}>
-                      ✅ Confidence noted! This skill will be tracked in your progress.
-                    </div>
-                  )}
+           {confidenceValue >= 4 && (
+  <>
+    <div style={{ marginTop: "10px", color: "#00ff88" }}>
+      ✅ Confidence noted! This skill will be tracked in your progress.
+    </div>
+  </>
+)}
+
 
                   <button
                     onClick={() => {
