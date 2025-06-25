@@ -232,20 +232,55 @@ Respond as a friendly coach in 2-3 sentences max.
       tripNo,
       previousSpending: spentSoFar,
     });
-  }
-async function endSessionWithSummary() {
-  setLoading(true);
+  }async function endSessionWithSummary() {
+  const previousSpending = Number(avgBudget) * (Number(tripNo) - 1);
 
-  setAwaitingChoice(false);
-  setSessionEnded(true); // Mark session as ended
-  setConversation((prev) => [
-    ...prev,
-    {
-      from: "AI",
-      text: "Thanks for using BudgetQuest! You've made thoughtful budgeting choices. Come back anytime to plan another trip!",
-    },
-  ]);
+  const endprompt = `Say Thanks for using BudgetQuest! You've made thoughtful budgeting choices. Come back anytime to plan another trip! 
+  and also give one small budgeting tip or useful asssitance tip like keep tone like buddy based on below information: 
+  The user is on grocery shopping trip ${tripNo},  
+  having spent approximately €${previousSpending} so far. Their shopping list includes: ${items}
+  Message should be short. Avoid very long responses and in keep strictly in below format :
+  Tip for the trip : ...
+  dont add any commentry in response keep it clean `;
+
+  setLoading(true);
+  try {
+    const response = await axios({
+      url: `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      method: "POST",
+      data: {
+        contents: [{ parts: [{ text: endprompt }] }],
+      },
+    });
+
+    const feedbackText = response.data.candidates[0].content.parts[0].text.trim();
+    setAwaitingChoice(false);
+    setSessionEnded(true);
+    setConversation((prev) => [...prev, { from: "AI", text: feedbackText }]);
+  } catch (err) {
+    console.error("Error generating feedback:", err);
+    setConversation((prev) => [
+      ...prev,
+      {
+        from: "AI",
+        text: "Oops! Something went wrong generating feedback. You can try another scenario.",
+      },
+    ]);
+  } finally {
+    setLoading(false);
+  }
 }
+
+
+ // Mark session as ended
+//   setConversation((prev) => [
+//     ...prev,
+//     {
+//       from: "AI",
+//       text: "Thanks for using BudgetQuest! You've made thoughtful budgeting choices. Come back anytime to plan another trip!",
+//     },
+//   ]);
+// }
   return (
     <div style={{ padding: 20, maxWidth: 950, margin: "auto" }}>
       <video
@@ -457,7 +492,7 @@ async function endSessionWithSummary() {
       opacity: "1"
     }}
   >
-    End AI Session
+    End Session
   </button>
 )}
       </div>

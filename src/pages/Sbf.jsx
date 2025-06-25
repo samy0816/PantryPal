@@ -3,28 +3,23 @@ import { useEffect, useState } from "react";
 const foodFacts = [
   {
     fact: "Adding salt early in cooking helps tenderize meat.",
-    linkText: "Try our Quiz now!",
-    linkHref: "/quiz", // Change to your actual route
+    // Change to your actual route
   },
   {
     fact: "Tomatoes have more umami flavor when cooked.",
-    linkText: "Try our Quiz now!",
-    linkHref: "/quiz",
+ 
   },
   {
     fact: "The Maillard reaction creates browned flavors in cooking.",
-    linkText: "Try our Quiz now!",
-    linkHref: "/quiz",
+
   },
   {
     fact: "Lemon juice can prevent fruits like apples from browning.",
-    linkText: "Try our Quiz now!",
-    linkHref: "/quiz",
+
   },
   {
     fact: "Soaking onions in water reduces their pungency.",
-    linkText: "Try our Quiz now!",
-    linkHref: "/quiz",
+   
   },
 ];
 

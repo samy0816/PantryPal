@@ -93,6 +93,7 @@ Energy Level: ${energyLevel || "Any"}
 Dietary Restrictions: ${dietaryRestrictions || "None"}
 Mood: ${mood || "Neutral"}
 Respond in the following strict format with no extra commentary:
+
 🍽 Recipe Name: ...
 🧂 Ingredients:(example format answer strictly in list format)
 1.tomato
@@ -101,8 +102,8 @@ Respond in the following strict format with no extra commentary:
 ⏱ Estimated Time: ...
 🛒 Nearest German Store: ...
 🧠 Science Behind the Food: ...
-🎓 Skill Refresher : ...
----`;
+🎓 Skill Refresher :... 
+`;
 
     try {
       const response = await axios.post(
@@ -220,67 +221,80 @@ Respond in the following strict format with no extra commentary:
         color: "#FFCB77", fontSize: "26px",
         fontWeight: "bold", fontFamily: "Life Savers", marginBottom: "1rem"
       }}>{parsedRecipe.name}</h2>
+<div style={{
+  backgroundColor: "#382120", padding: "1rem", borderRadius: "12px",
+  marginBottom: "1rem", border: "1px solid #fff2", boxShadow: "inset 0 0 10px #0004"
+}}>
+  <p><strong>🧂 Ingredients:</strong></p>
+  <p style={{ fontSize: "15px", color: "#f5f5f5" }}>{parsedRecipe.ingredients}</p>
+</div>
 
-      <div style={{
-        backgroundColor: "#382120", padding: "1rem", borderRadius: "12px",
-        marginBottom: "1rem", border: "1px solid #fff2", boxShadow: "inset 0 0 10px #0004"
-      }}>
-        <p><strong>🧂 Ingredients:</strong></p>
-        <p style={{ fontSize: "15px", color: "#f5f5f5" }}>{parsedRecipe.ingredients}</p>
-      </div>
+{/* ⏱ Extra Details (now shown before steps) */}
+<div style={{
+  backgroundColor: "#2f1d1d", padding: "1rem", borderRadius: "12px",
+  marginBottom: "1rem", border: "1px solid #fff2", boxShadow: "inset 0 0 6px #0003"
+}}>
+  <p><strong>⏱ Estimated Time:</strong> {parsedRecipe.time}</p>
+  <br />
+  <p><strong>🛒 Nearest Store Tip:</strong> {parsedRecipe.store}</p>
+<br />
+    <p><strong>🎓 Skill Refresher:</strong> {parsedRecipe.video}</p>
+</div>
 
-      {currentStep < parsedRecipe.instructions.length ? (
-        <>
-          <div style={{
-            backgroundColor: "#412727", padding: "1.2rem", borderRadius: "12px",
-            marginBottom: "1rem", border: "1px solid #fff2", transition: "all 0.3s ease"
-          }}>
-            <p style={{ fontSize: "17px" }}><strong>👩‍🍳 Step {currentStep + 1} of {parsedRecipe.instructions.length}:</strong></p>
-            <p style={{ fontSize: "15px", color: "#fff" }}>{parsedRecipe.instructions[currentStep]}</p>
-          </div>
+{/* Steps */}
+{currentStep < parsedRecipe.instructions.length ? (
+  <>
+    <div style={{
+      backgroundColor: "#412727", padding: "1.2rem", borderRadius: "12px",
+      marginBottom: "1rem", border: "1px solid #fff2"
+    }}>
+      <p style={{ fontSize: "17px" }}><strong>👩‍🍳 Step {currentStep + 1} of {parsedRecipe.instructions.length}:</strong></p>
+      <p style={{ fontSize: "15px", color: "#fff" }}>{parsedRecipe.instructions[currentStep]}</p>
+    </div>
 
-          <Button
-            onClick={() => setCurrentStep(currentStep + 1)}
-            className="tbtn"
-            variant="contained"
-            style={{
-              backgroundColor: "#FF7043", color: "white",
-              fontWeight: "bold", borderRadius: "30px", padding: "8px 24px",
-              marginTop: "0.5rem", transition: "0.2s ease",opacity:"1"
-            }}
-          >
-            ✅ Done, Next Step
-          </Button>
-        </>
-      ) : (
-        <div style={{
-          backgroundColor: "#362424", padding: "1.2rem", borderRadius: "12px",
-          border: "1px solid #fff2", boxShadow: "inset 0 0 8px #0005"
-        }}>
-          <p><strong>⏱ Estimated Time:</strong> {parsedRecipe.time}</p>
-          <br />
-          <p><strong>🛒 Nearest Store Tip:</strong> {parsedRecipe.store}</p>
-               <br />
-          <p><strong>🧠 Science Behind the Food:</strong> {parsedRecipe.science}</p>
-               <br />
-          <p><strong>🎓 Skill Refresher:</strong> {parsedRecipe.video}</p>
+    <Button
+      onClick={() => setCurrentStep(currentStep + 1)}
+      className="tbtn"
+      variant="contained"
+      style={{
+        backgroundColor: "#FF7043", color: "white",
+        fontWeight: "bold", borderRadius: "30px", padding: "8px 24px",
+        marginTop: "0.5rem", transition: "0.2s ease", opacity: "1"
+      }}
+    >
+      ✅ Done, Next Step
+    </Button>
+  </>
+) : (
+  <div style={{
+    backgroundColor: "#362424", padding: "1.2rem", borderRadius: "12px",
+    border: "1px solid #fff2", boxShadow: "inset 0 0 8px #0005"
+  }}>
+    
+    <p>🎉 You've completed all the steps!</p>
 
-          <Button
-            variant="outlined"
-            style={{
-              marginTop: "1rem", color: "#fff", borderColor: "#fff",
-              borderRadius: "30px", padding: "8px 24px"
-            }}
-            onClick={() => {
-              setParsedRecipe(null);
-              setCount("");
-              setCurrentStep(0);
-            }}
-          >
-            🔄 Start Over
-          </Button>
-        </div>
-      )}
+      <p><strong>🧠 Science Behind the Food:</strong> {parsedRecipe.science}</p>
+  <br />
+
+
+    <Button
+      variant="outlined"
+      className="tbtn"
+      style={{
+        marginTop: "1rem", color: "#fff", borderColor: "#fff",
+        borderRadius: "30px", padding: "8px 24px",opacity:"1"
+      }}
+      onClick={() => {
+        setParsedRecipe(null);
+        setCount("");
+        setCurrentStep(0);
+      }}
+    >
+      🔄 Start Over
+    </Button>
+  </div>
+)}
+
     </div>
   ) : (
     <div style={{ textAlign: "center" }}>
