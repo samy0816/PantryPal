@@ -15,9 +15,42 @@ import InfoOutlineIcon from '@mui/icons-material/InfoOutline';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
-
+import confetti from 'canvas-confetti';
 
 const slidesData = [
+{
+  "imgSrc": "Images/Ktools.webp",
+  "title": "Kitchen Essentials Tools",
+  "description": "Get hands-on with the most important kitchen tools to build your foundation as a confident home cook.",
+  "categories": ["Beginner"],
+  "videoUrl": "https://www.youtube.com/watch?v=1AxLzMJIgxM&t=44s",
+  "tasks": [
+  {
+    "time": 202,
+    "question": "What's the correct way to hold a chef’s knife for better control and safety?",
+    "options": [
+      "Grab the end of the handle with all fingers",
+      "Pinch the blade near the handle with thumb and forefinger",
+      "Place your index finger along the top of the blade"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "time": 272,
+    "question": "When heating a non-stick pan, what's a safe practice to avoid damage?",
+    "options": [
+      "Preheat it empty on high heat",
+      "Always use metal utensils for better precision",
+      "Avoid overheating and use silicone or wooden utensils"
+    ],
+    "correctIndex": 2
+  }
+],
+  "realTask": {
+    "description": "Pick up three essential tools: a chef’s knife, a peeler, and a spatula. Practice holding each one properly. Try slicing a vegetable, peeling a carrot, and flipping a slice of bread in a pan. Focus on comfort, control, and safety as you go.",
+    "duration": 30
+  }
+},
     {
         "imgSrc": "Images/images.jpg",
         "title": "Knife Skills 101",
@@ -623,7 +656,11 @@ const resetSlideSession = () => {
       onClick={() => {
       const audio = new Audio("./Images/success.mp3");
   audio.play().catch((e) => console.log("Playback error:", e));
-
+ confetti({
+          particleCount: 150,
+          spread: 500,
+          origin: { y: 0.6 },
+        });
         toast.success("Great! Task completed ✅ You are doing great chef!");
         setShowRealTask(false);
         setShowConfidenceRating(true);
