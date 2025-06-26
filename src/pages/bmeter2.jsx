@@ -47,7 +47,7 @@ export default function Bmeter() {
             <li>Run out of money before the month ends</li>
             <li>Rely on cheap, unhealthy meals</li>
           </ul>
-          Budgeting helps you balance nutrition, convenience, and cost—so you can eat well without financial stress.
+          Budgeting helps you balance nutrition, convenience, and cost so you can eat well without financial stress.
         </p>
         <span className="rightcontainer-arrow"></span>
       </div>
@@ -58,7 +58,7 @@ export default function Bmeter() {
       <div className="textbox">
         <h2>Start with a Realistic Budget</h2>
         <p>
-          Begin by looking at your total monthly income and fixed expenses. Decide how much you can reasonably allocate to food. A good food budget should reflect your needs, lifestyle, and cooking habits. It doesn't have to be perfect—just practical.
+          Begin by looking at your total monthly income and fixed expenses. Decide how much you can reasonably allocate to food. A good food budget should reflect your needs, lifestyle, and cooking habits. It doesn't have to be perfect just practical.
         </p>
         <span className="leftcontainer-arrow"></span>
       </div>
@@ -124,7 +124,7 @@ export default function Bmeter() {
       <div className="textbox">
         <h2>Smart Budgeting, Smart Living</h2>
         <p>
-          Food budgeting isn’t just about saving money—it’s about gaining control over your lifestyle. You’ll develop better habits, eat more intentionally, and build financial confidence that carries into other areas of life.
+          Food budgeting isn’t just about saving money it’s about gaining control over your lifestyle. You’ll develop better habits, eat more intentionally, and build financial confidence that carries into other areas of life.
         </p>
         <span className="leftcontainer-arrow"></span>
       </div>

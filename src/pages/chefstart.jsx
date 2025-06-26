@@ -404,7 +404,7 @@ useEffect(() => {
   } else {
      const audio = new Audio("./Images/fail.mp3");
   audio.play().catch((e) => console.log("Playback error:", e));
- toast.error("Hmm, not quite. Re-read the question — think like a chef!");
+ toast.error("Hmm, not quite. Re-read the question, think like a chef!");
   }
   
   };
