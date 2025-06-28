@@ -80,7 +80,10 @@ export default function CookBuddy() {
 
   async function generateAndStructureAnswer() {
     if (!count.trim()) return;
-
+  
+  const audio = new Audio("./Images/Cooking.mp3");
+  audio.play().catch((e) => console.log("Playback error:", e));
+            
     setLoading(true);
     setParsedRecipe(null);
     setCurrentStep(0);
@@ -117,9 +120,13 @@ Respond in the following strict format with no extra commentary:
       const cleaned = raw.replace(/\*\*/g, "").trim();
       const parsed = parseRecipeText(cleaned);
       setParsedRecipe(parsed);
+
+      
     } catch (err) {
       console.error(err);
     } finally {
+       audio.pause();
+    audio.currentTime = 0;
       setLoading(false);
     }
   }
@@ -166,6 +173,8 @@ Respond in the following strict format with no extra commentary:
 
           <button onClick={generateAndStructureAnswer} disabled={loading} className="sbtn">
             {loading ? "Generating..." : "Generate Recipe"}
+            
+            
           </button>
 
           <Box sx={{ display: "flex", flexWrap: "wrap", gap: 2, marginTop: "1rem" }}>
@@ -212,7 +221,8 @@ Respond in the following strict format with no extra commentary:
       }}>
         {cookingMessages[cuisineType.toLowerCase()] || cookingMessages.default}
       </p>
-      <div className="bubble"></div><div className="bubble"></div>
+      <div className="bubble"></div><div className="bubble">
+      </div>
       <div id="area"><div id="sides"><div id="pan"></div><div id="handle"></div></div><div id="pancake"><div id="pastry"></div></div></div>
     </div>
   ) : parsedRecipe ? (
