@@ -156,7 +156,7 @@ Respond in the following strict format with no extra commentary:
           <textarea
             value={count}
             onChange={(e) => setCount(e.target.value)}
-            placeholder="🧂 Enter ingredients...(For e.g Bread, tomato, spinach, cheese..)"
+            placeholder="🧂 Enter ingredients...(e.g Bread, tomato, spinach, cheese..)"
             rows={5}
             style={{
               width: "100%", marginBottom: "1rem", borderRadius: "8px", padding: "1rem",
