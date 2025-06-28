@@ -134,7 +134,7 @@ export default function Bmeter() {
       <h3>🧮</h3>
       <div className="textbox">
         <h2>Want to Try It Out?</h2>
-        <Link to='/bmeter2'>Click here to try BudgetMeter and explore your personalized grocery spending plan through our interactive shopping simulation!</Link>
+        <Link to='/bmeter2'>Click here to try BudgetQuest and explore your personalized grocery spending plan through our interactive shopping simulation!</Link>
         <span className="rightcontainer-arrow"></span>
       </div>
     </div>
